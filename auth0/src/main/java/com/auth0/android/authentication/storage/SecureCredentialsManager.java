@@ -58,6 +58,8 @@ public class SecureCredentialsManager {
     private BaseCallback<Credentials, CredentialsManagerException> decryptCallback;
     private Intent authIntent;
 
+    boolean forceRefresh = false;
+
 
     @VisibleForTesting
     SecureCredentialsManager(@NonNull AuthenticationAPIClient apiClient, @NonNull Storage storage, @NonNull CryptoUtil crypto, @NonNull JWTDecoder jwtDecoder) {
@@ -254,7 +256,7 @@ public class SecureCredentialsManager {
             decryptCallback = null;
             return;
         }
-        if (expiresAt > getCurrentTimeInMillis()) {
+        if (!forceRefresh && expiresAt > getCurrentTimeInMillis()) {
             callback.onSuccess(credentials);
             decryptCallback = null;
             return;
@@ -266,6 +268,7 @@ public class SecureCredentialsManager {
         }
 
         Log.d(TAG, "Credentials have expired. Renewing them now...");
+        if (forceRefresh) forceRefresh = false;
         apiClient.renewAuth(credentials.getRefreshToken()).start(new AuthenticationCallback<Credentials>() {
             @Override
             public void onSuccess(Credentials fresh) {
