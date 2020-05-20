@@ -23,7 +23,29 @@
  */
 
 apply plugin: 'com.github.dcendents.android-maven'
+
+
 group = 'com.github.amanzan'
+
+logger.lifecycle("Using version ${version} for ${name}")
+
+oss {
+    name 'Auth0.Android'
+    repository 'Auth0.Android'
+    organization 'auth0'
+    description 'Android toolkit for Auth0 API'
+
+    developers {
+        auth0 {
+            displayName = 'Auth0'
+            email = 'oss@auth0.com'
+        }
+        lbalmaceda {
+            displayName = 'Luciano Balmaceda'
+            email = 'luciano.balmaceda@auth0.com'
+        }
+    }
+}
 
 android {
     compileSdkVersion 28
@@ -64,7 +86,4 @@ dependencies {
     testImplementation 'com.jayway.awaitility:awaitility:1.7.0'
     testImplementation 'org.robolectric:robolectric:4.0.2'
     testImplementation 'com.android.support.test.espresso:espresso-intents:3.0.2'
-
-    classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
-    classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
 }
