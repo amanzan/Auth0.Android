@@ -22,9 +22,8 @@
  * THE SOFTWARE.
  */
 
-plugins {
-    id "com.auth0.gradle.oss-library.android" version "0.10.0"
-}
+apply plugin: 'com.github.dcendents.android-maven'
+group = 'com.github.amanzan'
 
 logger.lifecycle("Using version ${version} for ${name}")
 
